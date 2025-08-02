@@ -1,0 +1,47 @@
+body {
+  font-family: sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+}
+
+.upload-section {
+  padding: 1em;
+  text-align: center;
+}
+
+input[type="file"] {
+  margin-bottom: 1em;
+}
+
+button {
+  padding: 0.5em 1em;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+.video-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1em;
+  padding: 1em;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  background: black;
+}
