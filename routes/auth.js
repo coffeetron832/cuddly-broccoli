@@ -27,6 +27,7 @@ router.post("/register", async (req, res) => {
 });
 
 // LOGIN
+// LOGIN
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -34,10 +35,9 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Usuario no encontrado" });
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await user.comparePassword(password);
     if (!match) return res.status(400).json({ message: "Contraseña incorrecta" });
 
-    // Crear token
     const token = jwt.sign(
       { userId: user._id, username: user.username },
       JWT_SECRET,
@@ -49,5 +49,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
+
 
 module.exports = router;
