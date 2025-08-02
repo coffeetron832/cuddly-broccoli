@@ -23,6 +23,8 @@ app.use(express.json());
 // Rutas
 const videoRoutes = require("./routes/videos");
 app.use("/api/videos", videoRoutes);
+const authRoutes = require("./routes/auth");
+app.use("/api/auth", authRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
