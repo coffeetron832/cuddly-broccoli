@@ -9,11 +9,14 @@
 <body>
   <header>
     <h1>VidLine</h1>
+    <div id="userArea">
+      <!-- Aquí se mostrará el nombre del usuario si está logueado -->
+    </div>
     <p>Sube y mira tus videos de forma simple</p>
   </header>
 
   <main>
-    <section class="upload-section">
+    <section class="upload-section" id="uploadSection" style="display: none;">
       <form id="uploadForm">
         <input type="file" name="video" id="videoInput" accept="video/*" required />
         <button type="submit">Subir Video</button>
