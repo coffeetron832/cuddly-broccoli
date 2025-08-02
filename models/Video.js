@@ -8,6 +8,12 @@ const VideoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Video", VideoSchema);
+
