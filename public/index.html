@@ -4,31 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VidLine</title>
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 0 1rem;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #userArea {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: #777;
+      margin-left: auto;
+      margin-right: 1rem;
+    }
+
+    main {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .upload-section {
+      background: #fff;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .upload-section button {
+      padding: 0.5rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .upload-section button:hover {
+      background-color: #45a049;
+    }
+
+    .video-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .video-card {
+      background: #fff;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    .video-card video {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>VidLine</h1>
+    <h1>
+      <i data-lucide="video" class="icon"></i>
+      VidLine
+    </h1>
+    <p>Sube y mira tus videos</p>
     <div id="userArea">
-      <!-- Aquí se mostrará el nombre del usuario si está logueado -->
+      <!-- Usuario aquí -->
     </div>
-    <p>Sube y mira tus videos de forma simple</p>
   </header>
 
   <main>
     <section class="upload-section" id="uploadSection" style="display: none;">
       <form id="uploadForm">
         <input type="file" name="video" id="videoInput" accept="video/*" required />
-        <button type="submit">Subir Video</button>
+        <button type="submit">
+          <i data-lucide="upload-cloud" class="icon"></i>
+          Subir Video
+        </button>
       </form>
       <p id="uploadStatus"></p>
     </section>
 
     <section class="video-gallery" id="videoGallery">
-      <!-- Aquí aparecerán los videos -->
+      <!-- Videos aparecerán aquí -->
     </section>
   </main>
 
+  <script>
+    lucide.createIcons();
+
+    // Aquí puedes agregar lógica JS para mostrar el nombre de usuario, etc.
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
