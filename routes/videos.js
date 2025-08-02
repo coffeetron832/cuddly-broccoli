@@ -4,6 +4,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const Video = require("../models/Video");
+const verifyToken = require("../middleware/auth");
 
 // Configuración de multer para guardar los videos en /uploads
 const storage = multer.diskStorage({
@@ -19,11 +20,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // POST - Subir video
-router.post("/", upload.single("video"), async (req, res) => {
+router.post("/", verifyToken, upload.single("video"), async (req, res) => {
   try {
     const video = new Video({
       filename: req.file.filename,
       url: `/uploads/${req.file.filename}`,
+      uploadedAt: new Date(),
+      userId: req.user.userId, // opcional: para enlazar video con el usuario
     });
 
     await video.save();
@@ -33,6 +36,7 @@ router.post("/", upload.single("video"), async (req, res) => {
     res.status(500).json({ message: "Error interno" });
   }
 });
+
 
 // GET - Listar todos los videos
 router.get("/", async (req, res) => {
