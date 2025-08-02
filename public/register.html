@@ -18,6 +18,18 @@
       <input type="password" placeholder="Contraseña" name="password" required>
       <button type="submit">Registrarse</button>
     </form>
+
+    <!-- Mensaje de verificación -->
+    <p id="verificationMessage" style="display: none;">
+      📧 Se envió un código de verificación a tu correo.
+    </p>
+
+    <!-- Campo para ingresar código de verificación -->
+    <form id="verifyForm" style="display: none; margin-top: 10px;">
+      <input type="text" placeholder="Código de verificación" name="code" required>
+      <button type="submit">Verificar código</button>
+    </form>
+
     <p id="registerStatus"></p>
     <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
   </main>
