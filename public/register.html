@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro | VidLine</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>VidLine</h1>
+    <p>Crea tu cuenta para subir videos</p>
+  </header>
+
+  <main class="auth">
+    <form id="registerForm">
+      <input type="text" placeholder="Nombre de usuario" name="username" required>
+      <input type="email" placeholder="Correo" name="email" required>
+      <input type="password" placeholder="Contraseña" name="password" required>
+      <button type="submit">Registrarse</button>
+    </form>
+    <p id="registerStatus"></p>
+    <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+  </main>
+
+  <script src="auth.js"></script>
+</body>
+</html>
