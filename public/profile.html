@@ -104,25 +104,25 @@
   <div class="video-list" id="videoList"></div>
 
   <script>
-    // Mostrar nombre
-    const username = localStorage.getItem("username");
-    document.getElementById("usernameDisplay").textContent = username || "Invitado";
+  // Mostrar nombre
+  const username = localStorage.getItem("username");
+  document.getElementById("usernameDisplay").textContent = username || "Invitado";
 
-    // Logout
-    function logout() {
-      localStorage.clear();
-      window.location.href = "login.html";
-    }
+  // Logout
+  function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+  }
 
-    // Cargar videos del usuario
-    const token = localStorage.getItem("token");
+  // Cargar videos del usuario
+  const token = localStorage.getItem("token");
 
-    if (token) {
-      fetch("/api/videos/my-videos", {
-       headers: {
-  "Authorization": "Bearer " + token
-}
-      })
+  if (token) {
+    fetch("/api/videos/my-videos", {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    })
       .then(res => {
         if (!res.ok) throw new Error("Error al cargar videos");
         return res.json();
@@ -139,7 +139,17 @@
           item.className = "video-item";
           item.innerHTML = `
             <video src="${video.url}" controls></video>
-            <p><strong>Subido:</strong> ${new Date(video.uploadedAt).toLocaleString()}</p>
+            <form onsubmit="return updateVideo('${video._id}', this)">
+              <p>
+                <input type="text" name="title" value="${video.title || ''}" placeholder="Título del video" />
+              </p>
+              <p>
+                <textarea name="description" placeholder="Descripción...">${video.description || ''}</textarea>
+              </p>
+              <p><strong>Subido:</strong> ${new Date(video.uploadedAt).toLocaleString()}</p>
+              <button type="submit">Guardar cambios</button>
+              <button type="button" onclick="deleteVideo('${video._id}', this)">Eliminar</button>
+            </form>
           `;
           list.appendChild(item);
         });
@@ -148,11 +158,61 @@
         console.error(err);
         document.getElementById("videoList").innerHTML = `<p class="empty-message">Error al cargar videos.</p>`;
       });
-    } else {
-      document.getElementById("videoList").innerHTML = `<p class="empty-message">No has iniciado sesión.</p>`;
-    }
+  } else {
+    document.getElementById("videoList").innerHTML = `<p class="empty-message">No has iniciado sesión.</p>`;
+  }
 
-    lucide.createIcons();
-  </script>
+  // Función para actualizar video (editar título y descripción)
+  function updateVideo(id, form) {
+    const token = localStorage.getItem("token");
+    const title = form.title.value;
+    const description = form.description.value;
+
+    fetch(`/api/videos/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token,
+      },
+      body: JSON.stringify({ title, description }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        alert("✅ " + data.message);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Error al guardar");
+      });
+
+    return false; // Evita que el formulario recargue la página
+  }
+
+  // Función para eliminar video
+  function deleteVideo(id, button) {
+    const token = localStorage.getItem("token");
+
+    if (!confirm("¿Seguro que quieres eliminar este video?")) return;
+
+    fetch(`/api/videos/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + token,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        alert("🗑️ " + data.message);
+        // Eliminar el contenedor del video visualmente
+        button.closest(".video-item").remove();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Error al eliminar");
+      });
+  }
+
+  lucide.createIcons();
+</script>
 </body>
 </html>
