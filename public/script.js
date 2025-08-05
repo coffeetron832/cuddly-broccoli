@@ -4,41 +4,49 @@ document.addEventListener("DOMContentLoaded", () => {
   const videoGallery = document.getElementById("videoGallery");
   const uploadStatus = document.getElementById("uploadStatus");
   const uploadSection = document.getElementById("uploadSection");
-  const userArea = document.getElementById("userArea");
+
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
 
-  // Mostrar nombre de usuario y botón de logout
-  if (token && username) {
-    if (uploadSection) uploadSection.style.display = "block";
-
-    userArea.innerHTML = `
-      <a href="profile.html" title="Mi perfil" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.3rem;">
-        <i data-lucide="user" class="icon"></i>
-        <span><strong>${username}</strong></span>
-      </a>
-      <button id="logoutBtn" style="margin-left: 0.5rem;">Cerrar sesión</button>
-    `;
-
-    lucide.createIcons();
-
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      localStorage.clear();
-      window.location.reload();
-    });
-  } else {
-    userArea.innerHTML = `
-      <p><a href="login.html">Inicia sesión</a> para subir tus videos</p>
-    `;
+  // Mostrar nombre en el header
+  const usernameDisplay = document.getElementById("usernameDisplay");
+  if (username && usernameDisplay) {
+    usernameDisplay.textContent = username;
   }
 
-  // SUBIR VIDEO (solo si estamos en upload.html)
-  if (uploadForm) {
+  // Agregar botón de logout si está logueado
+  const userArea = document.getElementById("userArea");
+  if (token && username && userArea) {
+    // Solo si no existe ya el botón
+    if (!document.getElementById("logoutBtn")) {
+      const logoutBtn = document.createElement("button");
+      logoutBtn.id = "logoutBtn";
+      logoutBtn.textContent = "Cerrar sesión";
+      logoutBtn.style.marginLeft = "0.5rem";
+      logoutBtn.style.fontSize = "0.8rem";
+      logoutBtn.style.cursor = "pointer";
+      userArea.appendChild(logoutBtn);
+
+      logoutBtn.addEventListener("click", () => {
+        localStorage.clear();
+        window.location.reload();
+      });
+    }
+  }
+
+  // Mostrar formulario de subida si estamos en upload.html y logueado
+  if (uploadSection && token) {
+    uploadSection.style.display = "block";
+  }
+
+  // SUBIDA DE VIDEO (solo si estamos en upload.html)
+  if (uploadForm && videoInput) {
     uploadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const file = videoInput.files[0];
+
       const title = document.getElementById("titleInput").value.trim();
       const description = document.getElementById("descriptionInput").value.trim();
+      const file = videoInput.files[0];
 
       if (!file || !title || !description) {
         uploadStatus.textContent = "Por favor completa todos los campos.";
@@ -65,9 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (res.ok) {
           uploadStatus.textContent = "¡Video subido con éxito!";
-          addVideoToGallery(result.video); // Objeto completo
+          addVideoToGallery(result.video);
         } else {
-          uploadStatus.textContent = "❌ Error: " + (result.message || "no se pudo subir.");
+          uploadStatus.textContent = "❌ Error: " + (result.message || "No se pudo subir.");
         }
       } catch (err) {
         uploadStatus.textContent = "❌ Error de red al subir el video.";
@@ -83,16 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Cargar videos en index.html
   if (videoGallery) {
     fetch("/api/videos")
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(video => addVideoToGallery(video)); // ✅ usamos el objeto completo
+      .then((res) => res.json())
+      .then((data) => {
+        data.forEach((video) => addVideoToGallery(video));
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Error al cargar videos:", err);
       });
   }
 
-  // Mostrar video con título y descripción
+  // Función para mostrar video en la galería con título y descripción
   function addVideoToGallery(video) {
     const div = document.createElement("div");
     div.className = "video-card";
