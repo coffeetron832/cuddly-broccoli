@@ -49,10 +49,18 @@ document.addEventListener("DOMContentLoaded", () => {
     uploadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const file = videoInput.files[0];
-      if (!file) return;
+const title = document.getElementById("titleInput").value.trim();
+const description = document.getElementById("descriptionInput").value.trim();
 
-      const formData = new FormData();
-      formData.append("video", file);
+if (!file || !title || !description) {
+  uploadStatus.textContent = "Por favor completa todos los campos.";
+  return;
+}
+
+const formData = new FormData();
+formData.append("video", file);
+formData.append("title", title);
+formData.append("description", description);
 
       uploadStatus.textContent = "Subiendo...";
 
