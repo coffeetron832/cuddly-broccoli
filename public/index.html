@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VidLine</title>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
     * {
       box-sizing: border-box;
@@ -21,64 +19,36 @@
       padding: 0 1rem;
     }
 
-   header {
-  background-color: #fff;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem auto; /* CENTRADO y margen inferior */
-  max-width: 800px; /* AJUSTA el ancho del header */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #ddd;
-  border-radius: 8px; /* opcional: bordes redondeados */
-}
+    header {
+      background-color: #fff;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem auto;
+      max-width: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+      border-radius: 8px;
+    }
 
-header h1 {
-  font-size: 1.2rem; /* Antes 1.5rem */
-  gap: 0.25rem;      /* Más compacto entre ícono y texto */
-}
+    header h1 {
+      font-size: 1.2rem;
+      gap: 0.25rem;
+    }
 
-header p {
-  font-size: 0.8rem; /* Más pequeño */
-  margin-left: auto;
-  margin-right: 0.5rem;
-}
+    header p {
+      font-size: 0.8rem;
+      margin-left: auto;
+      margin-right: 0.5rem;
+    }
 
-#userArea {
-  font-size: 0.8rem;
-}
-
+    #userArea {
+      font-size: 0.8rem;
+    }
 
     main {
       max-width: 800px;
       margin: auto;
-    }
-
-    .upload-section {
-      background: #fff;
-      padding: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-    }
-
-    .upload-section form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .upload-section button {
-      padding: 0.5rem;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .upload-section button:hover {
-      background-color: #45a049;
     }
 
     .video-gallery {
@@ -103,6 +73,19 @@ header p {
       width: 20px;
       height: 20px;
     }
+
+    .video-info {
+      margin-top: 0.5rem;
+    }
+
+    .video-title {
+      font-weight: bold;
+    }
+
+    .video-description {
+      font-size: 0.9rem;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -111,43 +94,29 @@ header p {
       <i data-lucide="video" class="icon"></i>
       VidLine
     </h1>
-    <p>Sube y mira tus videos</p>
+    <p>Mira los videos subidos</p>
     <div id="userArea">
-  <a href="profile.html" title="Mi perfil" style="text-decoration: none; color: inherit;">
-    <i data-lucide="user" class="icon"></i>
-    <span id="usernameDisplay">Mi perfil</span>
-  </a>
-</div>
+      <a href="profile.html" title="Mi perfil" style="text-decoration: none; color: inherit;">
+        <i data-lucide="user" class="icon"></i>
+        <span id="usernameDisplay">Mi perfil</span>
+      </a>
+    </div>
   </header>
 
   <main>
-    <section class="upload-section" id="uploadSection" style="display: none;">
-      <form id="uploadForm">
-  <input type="file" name="video" id="videoInput" accept="video/*" required />
-  <input type="text" name="title" id="titleInput" placeholder="Título del video" />
-  <textarea name="description" id="descriptionInput" placeholder="Descripción del video"></textarea>
-  <button type="submit">
-    <i data-lucide="upload-cloud" class="icon"></i>
-    Subir Video
-  </button>
-</form>
-      <p id="uploadStatus"></p>
-    </section>
-
     <section class="video-gallery" id="videoGallery">
-      <!-- Videos aparecerán aquí -->
+      <!-- Videos con título y descripción aparecerán aquí -->
     </section>
   </main>
 
   <script>
-  lucide.createIcons();
+    lucide.createIcons();
 
-  // Mostrar el nombre de usuario si está logueado
-  const username = localStorage.getItem("username");
-  if (username) {
-    document.getElementById("usernameDisplay").textContent = username;
-  }
-</script>
+    const username = localStorage.getItem("username");
+    if (username) {
+      document.getElementById("usernameDisplay").textContent = username;
+    }
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
