@@ -4,6 +4,14 @@ const mongoose = require("mongoose");
 const VideoSchema = new mongoose.Schema({
   filename: String,
   url: String,
+  title: {
+    type: String,
+    default: "Sin título"
+  },
+  description: {
+    type: String,
+    default: ""
+  },
   uploadedAt: {
     type: Date,
     default: Date.now,
