@@ -67,6 +67,12 @@
       <p><strong>Usuario:</strong> <span id="usernameDisplay">Cargando...</span></p>
     </div>
 
+<section id="myVideos" style="margin-top: 2rem; width: 100%; max-width: 800px;">
+  <h2>Mis Videos</h2>
+  <div id="videoList" style="display: grid; gap: 1rem;"></div>
+</section>
+
+    
     <button class="home" onclick="window.location.href='index.html'">
       <i data-lucide="home" class="icon"></i>Inicio
     </button>
@@ -76,17 +82,79 @@
   </div>
 
   <script>
-    // Cargar datos del usuario desde localStorage
-    const username = localStorage.getItem("username");
-    document.getElementById("usernameDisplay").textContent = username || "Invitado";
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+  const usernameDisplay = document.getElementById("usernameDisplay");
+  const videoList = document.getElementById("videoList");
 
-    // Función para cerrar sesión
-    function logout() {
-      localStorage.clear();
-      window.location.href = "login.html";
+  if (!token || !username) {
+    alert("Debes iniciar sesión para ver tu perfil.");
+    window.location.href = "login.html";
+  } else {
+    usernameDisplay.textContent = username;
+    fetch("/api/my-videos", {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then(res => res.json())
+      .then(videos => {
+        if (!videos.length) {
+          videoList.innerHTML = "<p>No has subido ningún video aún.</p>";
+          return;
+        }
+
+        videos.forEach(video => {
+          const wrapper = document.createElement("div");
+          wrapper.style.border = "1px solid #ccc";
+          wrapper.style.padding = "1rem";
+          wrapper.style.background = "#fff";
+          wrapper.style.borderRadius = "6px";
+
+          wrapper.innerHTML = `
+            <video src="${video.url}" controls style="width: 100%; border-radius: 4px;"></video>
+            <div style="margin-top: 0.5rem; display: flex; justify-content: flex-end;">
+              <button onclick="deleteVideo('${video._id}')" style="background: #e74c3c; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">
+                <i data-lucide="trash-2" class="icon"></i> Eliminar
+              </button>
+            </div>
+          `;
+          videoList.appendChild(wrapper);
+        });
+
+        lucide.createIcons();
+      })
+      .catch(err => {
+        videoList.innerHTML = "<p>Error al cargar los videos.</p>";
+        console.error(err);
+      });
+  }
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+  }
+
+  async function deleteVideo(id) {
+    if (!confirm("¿Estás seguro de que quieres eliminar este video?")) return;
+
+    const res = await fetch("/api/videos/" + id, {
+      method: "DELETE",
+      headers: {
+        Authorization: token
+      }
+    });
+
+    if (res.ok) {
+      alert("Video eliminado correctamente.");
+      location.reload();
+    } else {
+      const data = await res.json();
+      alert("❌ Error: " + (data.message || "no se pudo eliminar."));
     }
+  }
 
-    lucide.createIcons();
-  </script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
