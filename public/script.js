@@ -14,14 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     uploadSection.style.display = "block";
 
     userArea.innerHTML = `
-  <a href="profile.html" title="Mi perfil" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.3rem;">
-    <i data-lucide="user" class="icon"></i>
-    <span><strong>${username}</strong></span>
-  </a>
-  <button id="logoutBtn" style="margin-left: 0.5rem;">Cerrar sesión</button>
-`;
-lucide.createIcons();
+      <a href="profile.html" title="Mi perfil" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.3rem;">
+        <i data-lucide="user" class="icon"></i>
+        <span><strong>${username}</strong></span>
+      </a>
+      <button id="logoutBtn" style="margin-left: 0.5rem;">Cerrar sesión</button>
+    `;
 
+    lucide.createIcons();
 
     const logoutBtn = document.getElementById("logoutBtn");
     logoutBtn.addEventListener("click", () => {
@@ -56,21 +56,26 @@ lucide.createIcons();
 
       uploadStatus.textContent = "Subiendo...";
 
-      const res = await fetch("/api/videos", {
-        method: "POST",
-        headers: {
-          Authorization: token
-        },
-        body: formData
-      });
+      try {
+        const res = await fetch("/api/videos", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}` // ✅ CORREGIDO AQUÍ
+          },
+          body: formData
+        });
 
-      const result = await res.json();
+        const result = await res.json();
 
-      if (res.ok) {
-        uploadStatus.textContent = "¡Video subido con éxito!";
-        addVideoToGallery(result.url);
-      } else {
-        uploadStatus.textContent = "❌ Error: " + (result.message || "no se pudo subir.");
+        if (res.ok) {
+          uploadStatus.textContent = "¡Video subido con éxito!";
+          addVideoToGallery(result.url);
+        } else {
+          uploadStatus.textContent = "❌ Error: " + (result.message || "no se pudo subir.");
+        }
+      } catch (err) {
+        uploadStatus.textContent = "❌ Error de red al subir el video.";
+        console.error(err);
       }
 
       videoInput.value = "";
