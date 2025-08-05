@@ -24,6 +24,7 @@
       width: 100%;
       max-width: 400px;
       text-align: center;
+      margin-bottom: 2rem;
     }
 
     h1 {
@@ -58,6 +59,31 @@
       vertical-align: middle;
       margin-right: 5px;
     }
+
+    .video-list {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .video-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    video {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .empty-message {
+      color: #666;
+      text-align: center;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -67,12 +93,6 @@
       <p><strong>Usuario:</strong> <span id="usernameDisplay">Cargando...</span></p>
     </div>
 
-<section id="myVideos" style="margin-top: 2rem; width: 100%; max-width: 800px;">
-  <h2>Mis Videos</h2>
-  <div id="videoList" style="display: grid; gap: 1rem;"></div>
-</section>
-
-    
     <button class="home" onclick="window.location.href='index.html'">
       <i data-lucide="home" class="icon"></i>Inicio
     </button>
@@ -81,80 +101,58 @@
     </button>
   </div>
 
-  <script>
-  const username = localStorage.getItem("username");
-  const token = localStorage.getItem("token");
-  const usernameDisplay = document.getElementById("usernameDisplay");
-  const videoList = document.getElementById("videoList");
+  <div class="video-list" id="videoList"></div>
 
-  if (!token || !username) {
-    alert("Debes iniciar sesión para ver tu perfil.");
-    window.location.href = "login.html";
-  } else {
-    usernameDisplay.textContent = username;
-    fetch("/api/my-videos", {
-      headers: {
-        Authorization: token
-      }
-    })
-      .then(res => res.json())
+  <script>
+    // Mostrar nombre
+    const username = localStorage.getItem("username");
+    document.getElementById("usernameDisplay").textContent = username || "Invitado";
+
+    // Logout
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+
+    // Cargar videos del usuario
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      fetch("/api/videos/my-videos", {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Error al cargar videos");
+        return res.json();
+      })
       .then(videos => {
-        if (!videos.length) {
-          videoList.innerHTML = "<p>No has subido ningún video aún.</p>";
+        const list = document.getElementById("videoList");
+        if (videos.length === 0) {
+          list.innerHTML = `<p class="empty-message">Aún no has subido ningún video.</p>`;
           return;
         }
 
         videos.forEach(video => {
-          const wrapper = document.createElement("div");
-          wrapper.style.border = "1px solid #ccc";
-          wrapper.style.padding = "1rem";
-          wrapper.style.background = "#fff";
-          wrapper.style.borderRadius = "6px";
-
-          wrapper.innerHTML = `
-            <video src="${video.url}" controls style="width: 100%; border-radius: 4px;"></video>
-            <div style="margin-top: 0.5rem; display: flex; justify-content: flex-end;">
-              <button onclick="deleteVideo('${video._id}')" style="background: #e74c3c; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">
-                <i data-lucide="trash-2" class="icon"></i> Eliminar
-              </button>
-            </div>
+          const item = document.createElement("div");
+          item.className = "video-item";
+          item.innerHTML = `
+            <video src="${video.url}" controls></video>
+            <p><strong>Subido:</strong> ${new Date(video.uploadedAt).toLocaleString()}</p>
           `;
-          videoList.appendChild(wrapper);
+          list.appendChild(item);
         });
-
-        lucide.createIcons();
       })
       .catch(err => {
-        videoList.innerHTML = "<p>Error al cargar los videos.</p>";
         console.error(err);
+        document.getElementById("videoList").innerHTML = `<p class="empty-message">Error al cargar videos.</p>`;
       });
-  }
-
-  function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-  }
-
-  async function deleteVideo(id) {
-    if (!confirm("¿Estás seguro de que quieres eliminar este video?")) return;
-
-    const res = await fetch("/api/videos/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: token
-      }
-    });
-
-    if (res.ok) {
-      alert("Video eliminado correctamente.");
-      location.reload();
     } else {
-      const data = await res.json();
-      alert("❌ Error: " + (data.message || "no se pudo eliminar."));
+      document.getElementById("videoList").innerHTML = `<p class="empty-message">No has iniciado sesión.</p>`;
     }
-  }
 
-  lucide.createIcons();
-</script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
