@@ -14,9 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     uploadSection.style.display = "block";
 
     userArea.innerHTML = `
-      <p>👋 Hola, <strong>${username}</strong></p>
-      <button id="logoutBtn">Cerrar sesión</button>
-    `;
+  <a href="profile.html" title="Mi perfil" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.3rem;">
+    <i data-lucide="user" class="icon"></i>
+    <span><strong>${username}</strong></span>
+  </a>
+  <button id="logoutBtn" style="margin-left: 0.5rem;">Cerrar sesión</button>
+`;
+lucide.createIcons();
+
 
     const logoutBtn = document.getElementById("logoutBtn");
     logoutBtn.addEventListener("click", () => {
