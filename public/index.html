@@ -123,12 +123,14 @@ header p {
   <main>
     <section class="upload-section" id="uploadSection" style="display: none;">
       <form id="uploadForm">
-        <input type="file" name="video" id="videoInput" accept="video/*" required />
-        <button type="submit">
-          <i data-lucide="upload-cloud" class="icon"></i>
-          Subir Video
-        </button>
-      </form>
+  <input type="file" name="video" id="videoInput" accept="video/*" required />
+  <input type="text" name="title" id="titleInput" placeholder="Título del video" />
+  <textarea name="description" id="descriptionInput" placeholder="Descripción del video"></textarea>
+  <button type="submit">
+    <i data-lucide="upload-cloud" class="icon"></i>
+    Subir Video
+  </button>
+</form>
       <p id="uploadStatus"></p>
     </section>
 
