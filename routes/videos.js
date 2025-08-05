@@ -48,4 +48,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// GET - Listar solo los videos del usuario autenticado
+router.get("/my-videos", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const videos = await Video.find({ userId }).sort({ uploadedAt: -1 });
+    res.json(videos);
+  } catch (error) {
+    console.error("Error al obtener mis videos:", error);
+    res.status(500).json({ message: "Error al obtener tus videos" });
+  }
+});
+
 module.exports = router;
