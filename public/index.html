@@ -138,10 +138,14 @@ header p {
   </main>
 
   <script>
-    lucide.createIcons();
+  lucide.createIcons();
 
-    // Aquí puedes agregar lógica JS para mostrar el nombre de usuario, etc.
-  </script>
+  // Mostrar el nombre de usuario si está logueado
+  const username = localStorage.getItem("username");
+  if (username) {
+    document.getElementById("usernameDisplay").textContent = username;
+  }
+</script>
   <script src="script.js"></script>
 </body>
 </html>
