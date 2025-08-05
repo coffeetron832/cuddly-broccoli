@@ -119,9 +119,9 @@
 
     if (token) {
       fetch("/api/videos/my-videos", {
-        headers: {
-          Authorization: token
-        }
+       headers: {
+  "Authorization": "Bearer " + token
+}
       })
       .then(res => {
         if (!res.ok) throw new Error("Error al cargar videos");
