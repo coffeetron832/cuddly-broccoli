@@ -64,16 +64,21 @@ if (dashboardPage) {
   const card = document.createElement('div');
   card.className = 'link-card';
   card.innerHTML = `
-    <div class="link-meta">
-      ${image ? `<img src="${image}" alt="Vista previa" class="meta-img">` : ''}
-      <div class="meta-text">
-        <h3>${title}</h3>
-        <p>${description}</p>
-        <a href="${link.url}" target="_blank" title="${description || title}">${link.url}</a>
+  <div class="link-meta">
+    ${metadata?.image?.url ? `<img src="${metadata.image.url}" alt="Vista previa" class="meta-img">` : ''}
+    <div class="meta-text">
+      <h3>${link.title || metadata.title || 'Sin título'}</h3>
+      <p>${link.description || metadata.description || ''}</p>
+      <a href="${link.url}" target="_blank">${link.url}</a>
+      <div class="tooltip-preview">
+        <strong>Vista previa</strong><br>
+        ${metadata?.title || 'Sin título'}<br>
+        ${metadata?.description || ''}
       </div>
     </div>
-    <button data-id="${link._id}">Eliminar</button>
-  `;
+  </div>
+  <button data-id="${link._id}">Eliminar</button>
+`;
   linksList.appendChild(card);
 }
 
