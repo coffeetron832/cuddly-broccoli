@@ -55,44 +55,22 @@ if (dashboardPage) {
     window.location.href = 'login.html';
   });
 
-  // Crear tarjeta visual con preview
-  function createLinkCard(link) {
+  // Renderizar tarjeta de enlace
+  function renderLink(link, metadata) {
     const card = document.createElement('div');
     card.className = 'link-card';
-
-    const title = document.createElement('h3');
-    title.textContent = link.title;
-
-    const description = document.createElement('p');
-    description.textContent = link.description || '';
-
-    const anchor = document.createElement('a');
-    anchor.href = link.url;
-    anchor.target = '_blank';
-    anchor.textContent = link.url;
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Eliminar';
-    deleteBtn.dataset.id = link._id;
-
-    const previewBox = document.createElement('div');
-    previewBox.className = 'preview-box';
-
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://api.microlink.io?url=${encodeURIComponent(link.url)}&embed=true`;
-    iframe.setAttribute('frameborder', '0');
-    iframe.width = '100%';
-    iframe.height = '100%';
-
-    previewBox.appendChild(iframe);
-
-    card.appendChild(title);
-    card.appendChild(description);
-    card.appendChild(anchor);
-    card.appendChild(deleteBtn);
-    card.appendChild(previewBox);
-
-    return card;
+    card.innerHTML = `
+      <div class="link-meta">
+        ${metadata?.image?.url ? `<img src="${metadata.image.url}" alt="Vista previa" class="meta-img">` : ''}
+        <div class="meta-text">
+          <h3>${link.title || metadata.title || 'Sin título'}</h3>
+          <p>${link.description || metadata.description || ''}</p>
+          <a href="${link.url}" target="_blank">${link.url}</a>
+        </div>
+      </div>
+      <button data-id="${link._id}">Eliminar</button>
+    `;
+    linksList.appendChild(card);
   }
 
   // Cargar enlaces
@@ -102,10 +80,17 @@ if (dashboardPage) {
     });
     const data = await res.json();
     linksList.innerHTML = '';
-    data.forEach(link => {
-      const card = createLinkCard(link);
-      linksList.appendChild(card);
-    });
+
+    for (const link of data) {
+      try {
+        const metaRes = await fetch(`/api/preview?url=${encodeURIComponent(link.url)}`);
+        const meta = await metaRes.json();
+        renderLink(link, meta?.data);
+      } catch (err) {
+        console.error('Error cargando metadatos:', err);
+        renderLink(link, {}); // Sin metadata
+      }
+    }
   }
 
   // Agregar nuevo enlace
