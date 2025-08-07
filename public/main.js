@@ -55,6 +55,46 @@ if (dashboardPage) {
     window.location.href = 'login.html';
   });
 
+  // Crear tarjeta visual con preview
+  function createLinkCard(link) {
+    const card = document.createElement('div');
+    card.className = 'link-card';
+
+    const title = document.createElement('h3');
+    title.textContent = link.title;
+
+    const description = document.createElement('p');
+    description.textContent = link.description || '';
+
+    const anchor = document.createElement('a');
+    anchor.href = link.url;
+    anchor.target = '_blank';
+    anchor.textContent = link.url;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Eliminar';
+    deleteBtn.dataset.id = link._id;
+
+    const previewBox = document.createElement('div');
+    previewBox.className = 'preview-box';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://api.microlink.io?url=${encodeURIComponent(link.url)}&embed=true`;
+    iframe.setAttribute('frameborder', '0');
+    iframe.width = '100%';
+    iframe.height = '100%';
+
+    previewBox.appendChild(iframe);
+
+    card.appendChild(title);
+    card.appendChild(description);
+    card.appendChild(anchor);
+    card.appendChild(deleteBtn);
+    card.appendChild(previewBox);
+
+    return card;
+  }
+
   // Cargar enlaces
   async function loadLinks() {
     const res = await fetch('/api/links', {
@@ -63,14 +103,7 @@ if (dashboardPage) {
     const data = await res.json();
     linksList.innerHTML = '';
     data.forEach(link => {
-      const card = document.createElement('div');
-      card.className = 'link-card';
-      card.innerHTML = `
-        <h3>${link.title}</h3>
-        <p>${link.description || ''}</p>
-        <a href="${link.url}" target="_blank">${link.url}</a>
-        <button data-id="${link._id}">Eliminar</button>
-      `;
+      const card = createLinkCard(link);
       linksList.appendChild(card);
     });
   }
