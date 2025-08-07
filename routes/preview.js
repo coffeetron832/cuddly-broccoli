@@ -7,7 +7,7 @@ const { JSDOM } = require('jsdom');
 // Importación compatible con node-fetch v3+
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-router.get('/api/preview', async (req, res) => {
+router.get('/', async (req, res) => {
   const { url } = req.query;
 
   try {
