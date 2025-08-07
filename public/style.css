@@ -1,0 +1,75 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+.landing {
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+}
+
+.cta-buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin: 5px;
+  background: #333;
+  color: white;
+  border: none;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid #333;
+  color: #333;
+}
+
+.form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  animation: fadeIn 0.8s ease;
+}
+
+input {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  padding: 10px;
+  width: 100%;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #555;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
