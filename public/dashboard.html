@@ -123,6 +123,7 @@
       text-decoration: none;
       color: #0066cc;
       word-break: break-all;
+      position: relative;
     }
 
     .link-card button {
@@ -140,6 +141,28 @@
 
     .link-card button:hover {
       background: darkred;
+    }
+
+    /* Tooltip Preview */
+    .tooltip-preview {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 280px;
+      background: #fff;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      font-size: 0.85em;
+      z-index: 10;
+      display: none;
+      margin-top: 8px;
+    }
+
+    .link-card:hover .tooltip-preview {
+      display: block;
     }
 
     @keyframes fadeIn {
