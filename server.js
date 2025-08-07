@@ -17,6 +17,8 @@ const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 const linksRoutes = require('./routes/links');
 app.use('/api/links', linksRoutes);
+const previewRoutes = require('./routes/preview');
+app.use('/api/preview', previewRoutes);
 
 
 // MongoDB
