@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tu panel – LinkFlow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <h2>📎 Tus Enlaces</h2>
+      <button id="logoutBtn">Cerrar sesión</button>
+    </header>
+
+    <form id="linkForm">
+      <input type="text" id="title" placeholder="Título del enlace" required>
+      <input type="url" id="url" placeholder="https://ejemplo.com" required>
+      <textarea id="description" placeholder="Descripción (opcional)"></textarea>
+      <button type="submit">Agregar enlace</button>
+    </form>
+
+    <div id="linksList" class="links-grid"></div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
