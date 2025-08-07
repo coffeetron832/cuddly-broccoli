@@ -15,6 +15,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Rutas
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+const linksRoutes = require('./routes/links');
+app.use('/api/links', linksRoutes);
+
 
 // MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
