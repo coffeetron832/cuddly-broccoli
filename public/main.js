@@ -65,7 +65,7 @@ if (dashboardPage) {
   card.className = 'link-card';
   card.innerHTML = `
   <div class="link-meta">
-    ${metadata?.image?.url ? `<img src="${metadata.image.url}" alt="Vista previa" class="meta-img">` : ''}
+    ${metadata?.image ? `<img src="${metadata.image}" alt="Vista previa" class="meta-img">` : ''}
     <div class="meta-text">
       <h3>${link.title || metadata.title || 'Sin título'}</h3>
       <p>${link.description || metadata.description || ''}</p>
