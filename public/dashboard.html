@@ -1,25 +1,172 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Tu panel – LinkFlow</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu espacio – LinkFlow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Space Mono', monospace;
+      background: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .dashboard-container {
+      max-width: 800px;
+      margin: auto;
+      animation: fadeIn 0.7s ease-out;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    #logoutBtn {
+      background: crimson;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    #logoutBtn:hover {
+      background: darkred;
+    }
+
+    .intro {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    .form-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      transition: transform 0.2s ease;
+    }
+
+    .form-card:hover {
+      transform: scale(1.01);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: inherit;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: #333;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: #555;
+    }
+
+    .links-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .link-card {
+      background: white;
+      padding: 20px;
+      border-left: 6px solid #444;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      position: relative;
+      animation: fadeIn 0.4s ease;
+      transition: transform 0.2s ease;
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .link-card h3 {
+      margin: 0 0 8px;
+    }
+
+    .link-card p {
+      margin: 5px 0;
+      color: #555;
+      font-size: 0.9em;
+    }
+
+    .link-card a {
+      text-decoration: none;
+      color: #0066cc;
+      word-break: break-all;
+    }
+
+    .link-card button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: crimson;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 8px;
+      font-size: 0.8em;
+      cursor: pointer;
+    }
+
+    .link-card button:hover {
+      background: darkred;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <div class="dashboard-container">
     <header>
-      <h2>📎 Tus Enlaces</h2>
+      <h1 class="logo">🌌 LinkFlow</h1>
       <button id="logoutBtn">Cerrar sesión</button>
     </header>
 
-    <form id="linkForm">
-      <input type="text" id="title" placeholder="Título del enlace" required>
-      <input type="url" id="url" placeholder="https://ejemplo.com" required>
-      <textarea id="description" placeholder="Descripción (opcional)"></textarea>
-      <button type="submit">Agregar enlace</button>
+    <section class="intro">
+      <p>Organiza tus descubrimientos con estilo. Aquí están tus enlaces más valiosos.</p>
+    </section>
+
+    <form id="linkForm" class="card form-card">
+      <input type="text" id="title" placeholder="🌟 Título del enlace" required>
+      <input type="url" id="url" placeholder="🔗 https://ejemplo.com" required>
+      <textarea id="description" placeholder="💬 ¿Por qué guardas esto?"></textarea>
+      <button type="submit">💾 Guardar enlace</button>
     </form>
 
-    <div id="linksList" class="links-grid"></div>
+    <section id="linksList" class="links-grid"></section>
   </div>
 
   <script src="main.js"></script>
