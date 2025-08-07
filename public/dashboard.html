@@ -169,6 +169,49 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .link-meta {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.meta-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.meta-text {
+  flex: 1;
+}
+
+.meta-text h3 {
+  font-size: 1em;
+  margin: 0 0 6px;
+  color: #222;
+}
+
+.meta-text p {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.meta-text a {
+  font-size: 0.85em;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.meta-text a:hover {
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
