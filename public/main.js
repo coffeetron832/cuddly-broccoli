@@ -56,22 +56,27 @@ if (dashboardPage) {
   });
 
   // Renderizar tarjeta de enlace
-  function renderLink(link, metadata) {
-    const card = document.createElement('div');
-    card.className = 'link-card';
-    card.innerHTML = `
-      <div class="link-meta">
-        ${metadata?.image?.url ? `<img src="${metadata.image.url}" alt="Vista previa" class="meta-img">` : ''}
-        <div class="meta-text">
-          <h3>${link.title || metadata.title || 'Sin título'}</h3>
-          <p>${link.description || metadata.description || ''}</p>
-          <a href="${link.url}" target="_blank">${link.url}</a>
-        </div>
+  function renderLink(link, metadata = {}) {
+  const title = link.title || metadata.title || 'Sin título';
+  const description = link.description || metadata.description || '';
+  const image = metadata.image || '';
+
+  const card = document.createElement('div');
+  card.className = 'link-card';
+  card.innerHTML = `
+    <div class="link-meta">
+      ${image ? `<img src="${image}" alt="Vista previa" class="meta-img">` : ''}
+      <div class="meta-text">
+        <h3>${title}</h3>
+        <p>${description}</p>
+        <a href="${link.url}" target="_blank" title="${description || title}">${link.url}</a>
       </div>
-      <button data-id="${link._id}">Eliminar</button>
-    `;
-    linksList.appendChild(card);
-  }
+    </div>
+    <button data-id="${link._id}">Eliminar</button>
+  `;
+  linksList.appendChild(card);
+}
+
 
   // Cargar enlaces
   async function loadLinks() {
@@ -85,7 +90,7 @@ if (dashboardPage) {
       try {
         const metaRes = await fetch(`/api/preview?url=${encodeURIComponent(link.url)}`);
         const meta = await metaRes.json();
-        renderLink(link, meta?.data);
+        renderLink(link, meta);
       } catch (err) {
         console.error('Error cargando metadatos:', err);
         renderLink(link, {}); // Sin metadata
