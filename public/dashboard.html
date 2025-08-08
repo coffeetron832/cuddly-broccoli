@@ -207,11 +207,15 @@ button[type="submit"]:hover {
   padding: 6px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-
-  width: calc(100vw - 40px); /* Ancho de toda la ventana menos el padding body (20px a cada lado) */
+  
+  width: 120vw;        /* Ancho mayor que viewport */
   max-width: none;
-  margin: 0 auto;
+  
+  position: relative;
+  left: 50%;           /* Mover a la mitad del viewport */
+  transform: translateX(-50%); /* Centrar con transform */
   box-sizing: border-box;
+  z-index: 10;
 }
 
 
