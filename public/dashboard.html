@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Space Mono', monospace;
-      background: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
+      background: linear-gradient(160deg, #f9f9f9, #ececec);
       margin: 0;
       padding: 20px;
       color: #333;
@@ -30,6 +30,11 @@
     .logo {
       font-size: 1.8em;
       font-weight: bold;
+      transition: text-shadow 0.3s ease;
+    }
+
+    .logo:hover {
+      text-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
 
     #logoutBtn {
@@ -39,11 +44,12 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     #logoutBtn:hover {
       background: darkred;
+      transform: scale(1.03);
     }
 
     .intro {
@@ -58,11 +64,13 @@
       border-radius: 12px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
       margin-bottom: 30px;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeInUp 0.5s ease-out;
     }
 
     .form-card:hover {
       transform: scale(1.01);
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.08);
     }
 
     input, textarea {
@@ -72,6 +80,13 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-family: inherit;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #666;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      outline: none;
     }
 
     button[type="submit"] {
@@ -82,11 +97,12 @@
       font-weight: bold;
       border: none;
       border-radius: 8px;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     button[type="submit"]:hover {
       background: #555;
+      transform: scale(1.02);
     }
 
     .links-grid {
@@ -101,12 +117,13 @@
       border-radius: 10px;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
       position: relative;
-      animation: fadeIn 0.4s ease;
-      transition: transform 0.2s ease;
+      animation: fadeInUp 0.4s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .link-card:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
     }
 
     .link-card h3 {
@@ -123,7 +140,6 @@
       text-decoration: none;
       color: #0066cc;
       word-break: break-all;
-      position: relative;
     }
 
     .link-card button {
@@ -137,60 +153,77 @@
       padding: 5px 8px;
       font-size: 0.8em;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
     .link-card button:hover {
       background: darkred;
     }
 
-    
-
+    /* Metadatos */
     .link-meta {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-}
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
 
-.meta-img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
+    .meta-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
 
-.meta-text {
-  flex: 1;
-}
+    .meta-img:hover {
+      transform: scale(1.05);
+    }
 
-.meta-text h3 {
-  font-size: 1em;
-  margin: 0 0 6px;
-  color: #222;
-}
+    .meta-text {
+      flex: 1;
+    }
 
-.meta-text p {
-  font-size: 0.9em;
-  color: #555;
-  margin: 0 0 8px;
-  line-height: 1.4;
-}
+    .meta-text h3 {
+      font-size: 1em;
+      margin: 0 0 6px;
+      color: #222;
+    }
 
-.meta-text a {
-  font-size: 0.85em;
-  color: #0066cc;
-  text-decoration: none;
-}
+    .meta-text p {
+      font-size: 0.9em;
+      color: #555;
+      margin: 0 0 8px;
+      line-height: 1.4;
+    }
 
-.meta-text a:hover {
-  text-decoration: underline;
-}
+    .meta-text a {
+      font-size: 0.85em;
+      color: #0066cc;
+      text-decoration: none;
+    }
 
-    .meta-text a:hover + .tooltip-preview {
-  display: block;
-}
+    .meta-text a:hover {
+      text-decoration: underline;
+    }
 
+    /* Animaciones */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
