@@ -207,11 +207,13 @@ button[type="submit"]:hover {
   padding: 6px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  width: 100%;         /* Que ocupe todo el ancho del contenedor padre */
-  max-width: 1000px;   /* Máximo ancho deseado */
-  margin: 0 auto;      /* Centrado horizontal */
-  box-sizing: border-box; /* Para que el padding no aumente el ancho */
+
+  width: calc(100vw - 40px); /* Ancho de toda la ventana menos el padding body (20px a cada lado) */
+  max-width: none;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
+
 
 
 .compact-header h1.logo {
