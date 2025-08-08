@@ -202,15 +202,17 @@ button[type="submit"]:hover {
 .compact-header {
   display: flex;
   align-items: center;
-  gap: 12px; /* un poquito más compacto que 15px */
+  gap: 12px;
   background: white;
-  padding: 6px 20px; /* menos alto (6px vertical) y más ancho (20px horizontal) */
+  padding: 6px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  width: 150%;
-  max-width: none;
-  margin: auto;
+  width: 100%;         /* Que ocupe todo el ancho del contenedor padre */
+  max-width: 1000px;   /* Máximo ancho deseado */
+  margin: 0 auto;      /* Centrado horizontal */
+  box-sizing: border-box; /* Para que el padding no aumente el ancho */
 }
+
 
 .compact-header h1.logo {
   font-size: 1.2em; 
