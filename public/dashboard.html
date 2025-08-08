@@ -74,24 +74,23 @@
       font-family: inherit;
     }
 
-    button[type="submit"] {
-  background: transparent;
+   button[type="submit"] {
+  background: none;
   color: #555;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 2px 8px; /* mucho más bajo */
-  font-size: 12px; /* más compacto */
+  border: none;
+  padding: 0;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
-  line-height: 1.2; /* evita que se expanda verticalmente */
+  text-decoration: underline;
+  transition: color 0.2s ease;
 }
 
 button[type="submit"]:hover {
   color: #000;
-  border-color: #888;
-  background: rgba(0, 0, 0, 0.03);
+  text-decoration: none;
 }
+
 
 
 
