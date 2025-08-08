@@ -78,11 +78,6 @@ if (dashboardPage) {
           <h3>${escapeHtml(title)}</h3>
           <p>${escapeHtml(description)}</p>
           <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${escapeHtml(link.url)}</a>
-          <div class="tooltip-preview">
-            <strong>Vista previa</strong><br>
-            ${escapeHtml(metadata.title || title)}<br>
-            ${escapeHtml(metadata.description || description)}
-          </div>
         </div>
       </div>
       <button data-id="${link._id}">Eliminar</button>
