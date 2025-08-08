@@ -1,32 +1,32 @@
-// preview.js o dentro de server.js si todo está ahí
+// routes/preview.js
+import express from 'express';
+import fetch from 'node-fetch';
+import cheerio from 'cheerio';
 
-const express = require('express');
 const router = express.Router();
-const { JSDOM } = require('jsdom');
-
-// Importación compatible con node-fetch v3+
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 router.get('/', async (req, res) => {
   const { url } = req.query;
+  if (!url) return res.status(400).json({ error: 'URL requerida' });
 
   try {
     const response = await fetch(url);
     const html = await response.text();
-    const dom = new JSDOM(html);
-    const doc = dom.window.document;
+    const $ = cheerio.load(html);
 
-    const title = doc.querySelector('meta[property="og:title"]')?.content ||
-                  doc.querySelector('title')?.textContent || 'Sin título';
-    const description = doc.querySelector('meta[property="og:description"]')?.content ||
-                        doc.querySelector('meta[name="description"]')?.content || '';
-    const image = doc.querySelector('meta[property="og:image"]')?.content || '';
+    const title = $('meta[property="og:title"]').attr('content') || $('title').text() || 'Sin título';
+    const description = $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content') || '';
+    const image = $('meta[property="og:image"]').attr('content') || '/default-preview.png';
 
     res.json({ title, description, image });
-  } catch (err) {
-    console.error('Error obteniendo metadatos:', err.message);
-    res.status(500).json({ error: 'No se pudieron cargar los metadatos' });
+  } catch (error) {
+    console.error('Error obteniendo metadatos:', error);
+    res.json({
+      title: 'Sin título',
+      description: '',
+      image: '/default-preview.png'
+    });
   }
 });
 
-module.exports = router;
+export default router;
