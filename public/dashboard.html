@@ -6,227 +6,212 @@
   <title>Tu espacio – LinkFlow</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg-1: #f0f0f0;
-      --bg-2: #e6e6e6;
-      --accent: #4e9cff;
-      --muted: #666;
-      --card-shadow: rgba(0,0,0,0.06);
-    }
-
-    /* ---------- Page ---------- */
-    html,body{height:100%;margin:0}
     body {
       font-family: 'Space Mono', monospace;
-      background: linear-gradient(to bottom, var(--bg-1), var(--bg-2));
+      background: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
       margin: 0;
+      padding: 20px;
       color: #333;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
     }
 
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 12px;
+    .dashboard-container {
+      max-width: 800px;
+      margin: auto;
+      animation: fadeIn 0.7s ease-out;
     }
 
-    /* ---------- Compact header ---------- */
-    header.compact-header {
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 14px;
-      background: linear-gradient(90deg, #111214, #1a1a1a);
-      color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-      position: sticky;
-      top: 12px;
-      z-index: 50;
-      margin-bottom: 18px;
+      margin-bottom: 30px;
     }
 
-    .header-left { display:flex; align-items:center; gap:12px; }
     .logo {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      display:flex;
-      align-items:center;
-      gap:.5rem;
+      font-size: 1.8em;
+      font-weight: bold;
     }
-    .logo .brand-mark { font-size:1.15rem; }
 
-    .header-right { display:flex; gap:10px; align-items:center; }
-
-    .logout-btn {
-      background: #ff5b5b;
-      color: #fff;
+    #logoutBtn {
+      background: crimson;
+      color: white;
+      padding: 8px 14px;
       border: none;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      border-radius: 6px;
       cursor: pointer;
-      transition: transform .12s ease, background .12s ease;
+      transition: background 0.2s ease;
     }
-    .logout-btn:hover { transform: translateY(-2px); background:#e04646; }
 
-    /* ---------- Intro ---------- */
+    #logoutBtn:hover {
+      background: darkred;
+    }
+
     .intro {
-      text-align: center;
-      margin: 12px auto 18px;
-      max-width: 640px;
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height:1.4;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #444;
     }
 
-    /* ---------- Form (compact) ---------- */
     .form-card {
-      margin: 0 auto 18px;
-      max-width: 680px;
-      padding: 14px;
       background: white;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 6px 20px var(--card-shadow);
-      transition: transform .12s ease, box-shadow .12s ease;
-      display:block;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      transition: transform 0.2s ease;
     }
-    .form-card:active, .form-card:focus-within { transform: translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,0.10); }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 120px;
-      gap: 10px;
-      align-items: center;
+    .form-card:hover {
+      transform: scale(1.01);
     }
 
     input, textarea {
       width: 100%;
-      padding: 10px 12px;
-      margin: 8px 0;
-      border: 1px solid #e2e2e2;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
       border-radius: 8px;
       font-family: inherit;
-      font-size: 0.95rem;
-      background: #fff;
-      color: #222;
     }
 
-    textarea { min-height:70px; resize:vertical; }
-
-    .actions {
-      display:flex;
-      gap:10px;
-      margin-top:8px;
-    }
-
-    .btn-primary {
-      background: var(--accent);
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: #333;
       color: white;
+      font-weight: bold;
       border: none;
-      padding: 10px 12px;
       border-radius: 8px;
-      cursor: pointer;
-      font-weight:600;
-      transition: transform .12s ease, background .12s ease;
-      flex:1;
-    }
-    .btn-primary:hover { transform: translateY(-2px); background:#3b8ae6; }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid #ddd;
-      color: #333;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    /* ---------- Links grid ---------- */
+    button[type="submit"]:hover {
+      background: #555;
+    }
+
     .links-grid {
       display: grid;
-      gap: 14px;
-      margin-bottom: 40px;
+      gap: 20px;
     }
 
     .link-card {
       background: white;
-      padding: 14px;
+      padding: 20px;
       border-left: 6px solid #444;
       border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
       position: relative;
-      transition: transform .12s ease, box-shadow .12s ease;
-      overflow: visible;
+      animation: fadeIn 0.4s ease;
+      transition: transform 0.2s ease;
     }
-    .link-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.10); }
 
-    .link-meta { display:flex; gap:12px; align-items:flex-start; }
-    .meta-img {
-      width:72px; height:72px; object-fit:cover; border-radius:8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06); flex-shrink:0;
+    .link-card:hover {
+      transform: translateY(-2px);
     }
-    .meta-text { flex:1; min-width:0; }
-    .meta-text h3 { margin:0 0 6px; font-size:1rem; color:#111; }
-    .meta-text p { margin:0 0 8px; color:#555; font-size:0.9rem; line-height:1.3; }
-    .meta-text a { color:#0066cc; text-decoration:none; font-size:0.88rem; word-break:break-word; }
-    .meta-text a:hover { text-decoration:underline; }
 
-    .link-card button.delete {
-      position:absolute; top:12px; right:12px;
-      background:#ff6b6b; color:white; border:none; padding:6px 8px; border-radius:6px;
-      cursor:pointer; font-size:0.82rem; transition:transform .12s;
+    .link-card h3 {
+      margin: 0 0 8px;
     }
-    .link-card button.delete:hover { transform:translateY(-2px); background:#e04b4b; }
+
+    .link-card p {
+      margin: 5px 0;
+      color: #555;
+      font-size: 0.9em;
+    }
+
+    .link-card a {
+      text-decoration: none;
+      color: #0066cc;
+      word-break: break-all;
+      position: relative;
+    }
+
+    .link-card button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: crimson;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 8px;
+      font-size: 0.8em;
+      cursor: pointer;
+    }
+
+    .link-card button:hover {
+      background: darkred;
+    }
 
     
-    /* small screens: put tooltip below card */
-    @media (max-width:720px){
-      .wrap { padding:10px; }
-      .link-card { padding:12px; }
-      .tooltip-preview { left:0; top: calc(100% + 8px); transform: translateY(0) translateX(0); width:100%; }
-    }
 
-    /* tiny helpers */
-    .muted { color:var(--muted); font-size:0.9rem; }
+    .link-meta {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.meta-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.meta-text {
+  flex: 1;
+}
+
+.meta-text h3 {
+  font-size: 1em;
+  margin: 0 0 6px;
+  color: #222;
+}
+
+.meta-text p {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.meta-text a {
+  font-size: 0.85em;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.meta-text a:hover {
+  text-decoration: underline;
+}
+
+    .meta-text a:hover + .tooltip-preview {
+  display: block;
+}
 
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="compact-header" role="banner">
-      <div class="header-left">
-        <div class="logo"><span class="brand-mark">🌌</span><span>LinkFlow</span></div>
-      </div>
-      <div class="header-right">
-        <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
-      </div>
+  <div class="dashboard-container">
+    <header>
+      <h1 class="logo">🌌 LinkFlow</h1>
+      <button id="logoutBtn">Cerrar sesión</button>
     </header>
 
-    <main>
-      <section class="intro">
-        <p>Organiza tus descubrimientos con estilo ✨ — aquí están tus enlaces más valiosos.</p>
-      </section>
+    <section class="intro">
+      <p>Organiza tus descubrimientos con estilo. Aquí están tus enlaces más valiosos.</p>
+    </section>
 
-      <form id="linkForm" class="form-card" autocomplete="off">
-        <div class="form-row">
-          <input type="text" id="title" placeholder="🌟 Título del enlace" required>
-          <button type="submit" class="btn-primary">💾 Guardar</button>
-        </div>
+    <form id="linkForm" class="card form-card">
+      <input type="text" id="title" placeholder="🌟 Título del enlace" required>
+      <input type="url" id="url" placeholder="🔗 https://ejemplo.com" required>
+      <textarea id="description" placeholder="💬 ¿Por qué guardas esto?"></textarea>
+      <button type="submit">💾 Guardar enlace</button>
+    </form>
 
-        <input type="url" id="url" placeholder="🔗 https://ejemplo.com" required>
-        <textarea id="description" placeholder="💬 ¿Por qué guardas esto? (opcional)"></textarea>
-
-        <div class="actions">
-          <button type="button" class="btn-ghost" id="randomLinkBtn" title="Mostrar enlace aleatorio">🎲 Aleatorio</button>
-          <div class="muted" style="margin-left:auto; align-self:center; font-size:.85rem;">Guardado local & privado</div>
-        </div>
-      </form>
-
-      <section id="linksList" class="links-grid" aria-live="polite"></section>
-    </main>
+    <section id="linksList" class="links-grid"></section>
   </div>
 
   <script src="main.js"></script>
