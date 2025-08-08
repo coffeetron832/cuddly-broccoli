@@ -59,28 +59,31 @@ if (dashboardPage) {
   function renderLink(link, metadata = {}) {
   const title = link.title || metadata.title || 'Sin título';
   const description = link.description || metadata.description || '';
-  const image = metadata.image || '';
+  const image = (metadata.image && metadata.image.trim() !== '') 
+    ? metadata.image 
+    : 'default-preview.png'; // imagen por defecto en /public
 
   const card = document.createElement('div');
   card.className = 'link-card';
   card.innerHTML = `
-  <div class="link-meta">
-    ${metadata?.image ? `<img src="${metadata.image}" alt="Vista previa" class="meta-img">` : ''}
-    <div class="meta-text">
-      <h3>${link.title || metadata.title || 'Sin título'}</h3>
-      <p>${link.description || metadata.description || ''}</p>
-      <a href="${link.url}" target="_blank">${link.url}</a>
-      <div class="tooltip-preview">
-        <strong>Vista previa</strong><br>
-        ${metadata?.title || 'Sin título'}<br>
-        ${metadata?.description || ''}
+    <div class="link-meta">
+      <img src="${image}" alt="Vista previa" class="meta-img">
+      <div class="meta-text">
+        <h3>${title}</h3>
+        <p>${description}</p>
+        <a href="${link.url}" target="_blank">${link.url}</a>
+        <div class="tooltip-preview">
+          <strong>Vista previa</strong><br>
+          ${title}<br>
+          ${description}
+        </div>
       </div>
     </div>
-  </div>
-  <button data-id="${link._id}">Eliminar</button>
-`;
+    <button data-id="${link._id}">Eliminar</button>
+  `;
   linksList.appendChild(card);
 }
+
 
 
   // Cargar enlaces
@@ -95,6 +98,7 @@ if (dashboardPage) {
       try {
         const metaRes = await fetch(`/api/preview?url=${encodeURIComponent(link.url)}`);
         const meta = await metaRes.json();
+        console.log('Metadatos para', link.url, meta);
         renderLink(link, meta);
       } catch (err) {
         console.error('Error cargando metadatos:', err);
