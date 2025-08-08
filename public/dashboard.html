@@ -191,28 +191,84 @@
   display: block;
 }
 
+.compact-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.compact-header h1.logo {
+  font-size: 1.3em;
+  margin: 0;
+}
+
+#linkFormCompact {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+#linkFormCompact input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9em;
+}
+
+#linkFormCompact button {
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#linkFormCompact button:hover {
+  background: #555;
+}
+
+#logoutBtn {
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#logoutBtn:hover {
+  background: #d32f2f;
+}
+
+      
   </style>
 </head>
 <body>
   <div class="dashboard-container">
-    <header>
-      <h1 class="logo">🌌 LinkFlow</h1>
-      <button id="logoutBtn">Cerrar sesión</button>
-    </header>
-
-    <section class="intro">
-      <p>Organiza tus descubrimientos con estilo. Aquí están tus enlaces más valiosos.</p>
-    </section>
-
-    <form id="linkForm" class="card form-card">
-      <input type="text" id="title" placeholder="🌟 Título del enlace" required>
-      <input type="url" id="url" placeholder="🔗 https://ejemplo.com" required>
-      <textarea id="description" placeholder="💬 ¿Por qué guardas esto?"></textarea>
-      <button type="submit">💾 Guardar enlace</button>
+  <header class="compact-header">
+    <h1 class="logo">🌌 LinkFlow</h1>
+    
+    <form id="linkFormCompact">
+      <input type="text" id="title" placeholder="🌟 Título" required>
+      <input type="url" id="url" placeholder="🔗 URL" required>
+      <button type="submit">＋</button>
     </form>
 
-    <section id="linksList" class="links-grid"></section>
-  </div>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </header>
+
+  <section class="intro">
+    <p>Organiza tus descubrimientos con estilo. Aquí están tus enlaces más valiosos.</p>
+  </section>
+
+  <section id="linksList" class="links-grid"></section>
+</div>
+
 
   <script src="main.js"></script>
 </body>
