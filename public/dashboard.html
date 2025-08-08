@@ -194,15 +194,17 @@
 .compact-header {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px; /* un poquito más compacto que 15px */
   background: white;
-  padding: 10px 15px;
+  padding: 6px 20px; /* menos alto (6px vertical) y más ancho (20px horizontal) */
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  max-width: 1000px; /* más ancho que antes */
+  margin: auto;
 }
 
 .compact-header h1.logo {
-  font-size: 1.3em;
+  font-size: 1.2em; 
   margin: 0;
 }
 
@@ -213,10 +215,10 @@
 }
 
 #linkFormCompact input {
-  padding: 6px 10px;
+  padding: 5px 8px; 
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 0.9em;
+  font-size: 0.85em;
 }
 
 #linkFormCompact button {
@@ -224,7 +226,7 @@
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
@@ -237,7 +239,7 @@
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
