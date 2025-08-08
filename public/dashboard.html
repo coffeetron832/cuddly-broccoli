@@ -75,22 +75,23 @@
     }
 
     button[type="submit"] {
-  width: auto; /* ya no ocupa todo el ancho */
-  padding: 6px 14px; /* más pequeño */
-  background: #444; /* más suave que el negro */
-  color: white;
-  font-weight: 500; /* menos grueso */
-  border: none;
-  border-radius: 5px; /* más discreto */
-  font-size: 14px; /* más pequeño */
+  background: transparent;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.1s ease;
+  transition: all 0.2s ease;
 }
 
 button[type="submit"]:hover {
-  background: #666;
-  transform: scale(1.02);
+  color: #000;
+  border-color: #888;
+  background: rgba(0, 0, 0, 0.03);
 }
+
 
 
     .links-grid {
