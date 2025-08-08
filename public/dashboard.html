@@ -222,10 +222,12 @@ button[type="submit"]:hover {
 }
 
 #linkFormCompact input {
-  padding: 5px 8px; 
+  padding: 4px 8px;   /* Menos padding vertical */
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 0.85em;
+  height: 28px;       /* Fija altura para inputs */
+  box-sizing: border-box;
 }
 
 #linkFormCompact button {
@@ -233,13 +235,20 @@ button[type="submit"]:hover {
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 5px 10px;
+  padding: 0 10px;    /* Solo padding horizontal */
+  height: 28px;       /* Igual altura que inputs */
+  font-size: 18px;    /* Símbolo más grande y visible */
+  line-height: 1;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #linkFormCompact button:hover {
   background: #555;
 }
+
 
 #logoutBtn {
   background: #f44336;
