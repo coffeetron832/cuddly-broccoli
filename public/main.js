@@ -57,7 +57,7 @@ if (dashboardPage) {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('token');
-      window.location.href = 'login.html';
+      window.location.href = 'index.html';
     });
   }
 
