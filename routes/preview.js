@@ -1,32 +1,52 @@
 // routes/preview.js
-import express from 'express';
-import fetch from 'node-fetch';
-import cheerio from 'cheerio';
-
+const express = require('express');
 const router = express.Router();
+const { JSDOM } = require('jsdom');
+
+// Importación compatible con node-fetch v3+
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 router.get('/', async (req, res) => {
   const { url } = req.query;
-  if (!url) return res.status(400).json({ error: 'URL requerida' });
+
+  if (!url) {
+    return res.status(400).json({ error: 'Falta el parámetro url' });
+  }
 
   try {
     const response = await fetch(url);
     const html = await response.text();
-    const $ = cheerio.load(html);
+    const dom = new JSDOM(html);
+    const doc = dom.window.document;
 
-    const title = $('meta[property="og:title"]').attr('content') || $('title').text() || 'Sin título';
-    const description = $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content') || '';
-    const image = $('meta[property="og:image"]').attr('content') || '/default-preview.png';
+    const title =
+      doc.querySelector('meta[property="og:title"]')?.content ||
+      doc.querySelector('title')?.textContent ||
+      'Sin título';
+
+    const description =
+      doc.querySelector('meta[property="og:description"]')?.content ||
+      doc.querySelector('meta[name="description"]')?.content ||
+      '';
+
+    let image =
+      doc.querySelector('meta[property="og:image"]')?.content || '';
+
+    // Si la imagen es relativa, la volvemos absoluta
+    if (image && !image.startsWith('http')) {
+      try {
+        const base = new URL(url);
+        image = base.origin + image;
+      } catch (err) {
+        console.warn('No se pudo resolver la URL de imagen:', err.message);
+      }
+    }
 
     res.json({ title, description, image });
-  } catch (error) {
-    console.error('Error obteniendo metadatos:', error);
-    res.json({
-      title: 'Sin título',
-      description: '',
-      image: '/default-preview.png'
-    });
+  } catch (err) {
+    console.error('Error obteniendo metadatos:', err.message);
+    res.status(500).json({ error: 'No se pudieron cargar los metadatos' });
   }
 });
 
-export default router;
+module.exports = router;
