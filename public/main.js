@@ -71,11 +71,7 @@ if (dashboardPage) {
       <div class="meta-text">
         <h3>${title}</h3>
         <p>${description}</p>
-        <a href="${link.url}" target="_blank">${link.url}</a>
-        <div class="tooltip-preview">
-          <strong>Vista previa</strong><br>
-          ${title}<br>
-          ${description}
+        <a href="${link.url}" target="_blank">${link.url}</a>        
         </div>
       </div>
     </div>
